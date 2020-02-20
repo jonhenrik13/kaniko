@@ -38,13 +38,14 @@ import (
 )
 
 var (
-	opts     = &config.KanikoOptions{}
-	logLevel string
-	force    bool
+	opts         = &config.KanikoOptions{}
+	logLevel     string
+	logTimestamp bool
 )
 
 func init() {
 	RootCmd.PersistentFlags().StringVarP(&logLevel, "verbosity", "v", constants.DefaultLogLevel, "Log level (debug, info, warn, error, fatal, panic")
+	RootCmd.PersistentFlags().BoolVar(&logTimestamp, "log-timestamp", constants.DefaultTimestamp, "Timestamp in log output")
 	RootCmd.PersistentFlags().BoolVarP(&force, "force", "", false, "Force building outside of a container")
 	addKanikoOptionsFlags()
 	addHiddenFlags(RootCmd)
@@ -56,7 +57,7 @@ var RootCmd = &cobra.Command{
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		if cmd.Use == "executor" {
 			resolveEnvironmentBuildArgs(opts.BuildArgs, os.Getenv)
-			if err := util.ConfigureLogging(logLevel); err != nil {
+			if err := util.Configure(logLevel, logTimestamp); err != nil {
 				return err
 			}
 			if !opts.NoPush && len(opts.Destinations) == 0 {
