@@ -41,6 +41,7 @@ var (
 	opts         = &config.KanikoOptions{}
 	logLevel     string
 	logTimestamp bool
+	force        bool
 )
 
 func init() {
