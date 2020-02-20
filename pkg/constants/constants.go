@@ -20,6 +20,9 @@ const (
 	// DefaultLogLevel is the default log level
 	DefaultLogLevel = "info"
 
+	//DefaultTimestamp is whether or not to add timestamps to logs
+	DefaultTimestamp = false
+
 	// RootDir is the path to the root directory
 	RootDir = "/"
 

@@ -35,14 +35,15 @@ import (
 )
 
 // ConfigureLogging sets the logrus logging level and forces logs to be colorful (!)
-func ConfigureLogging(logLevel string) error {
+func ConfigureLogging(logLevel string, logTimestamp bool) error {
 	lvl, err := logrus.ParseLevel(logLevel)
 	if err != nil {
 		return errors.Wrap(err, "parsing log level")
 	}
 	logrus.SetLevel(lvl)
 	logrus.SetFormatter(&logrus.TextFormatter{
-		ForceColors: true,
+		ForceColors:   true,
+		FullTimestamp: logTimestamp,
 	})
 	return nil
 }
